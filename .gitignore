@@ -1,1 +1,36 @@
 .DS_Store
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+receipts.db
+uploaded_receipts/
+venv/
+
+# FastAPI logs
+*.log
+
+# Node
+node_modules/
+dist/
+build/
+
+# React
+frontend/build/
+frontend/.DS_Store
+frontend/.env
+
+# VSCode / system
+.vscode/
+.DS_Store
+.idea/
+
+# Coverage / testing
+coverage/
+*.cover
+*.pyc
+
+# OS generated
+Thumbs.db
+ehthumbs.db

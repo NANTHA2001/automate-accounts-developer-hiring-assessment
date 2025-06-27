@@ -1,0 +1,48 @@
+.receipt-card {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .receipt-card h2 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .receipt-item {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  
+  .receipt-item span {
+    font-weight: bold;
+    color: #555;
+    margin-right: 0.5rem;
+  }
+  
+  .download-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .download-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .loading {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  

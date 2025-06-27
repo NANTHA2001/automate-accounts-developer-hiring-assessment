@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+pytesseract
+pdf2image
+python-multipart
+aiofiles
+python-magic
+Pillow
