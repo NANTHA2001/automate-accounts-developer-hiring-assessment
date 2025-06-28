@@ -1,121 +1,255 @@
-# **Automate Accounts Developer Hiring Assessment**
+# 🧾 Automate Accounts – Receipt OCR System
 
-This assessment is designed to evaluate your ability to build a system for processing scanned receipts automatically. The goal is to extract relevant details from PDF receipts using OCR/AI techniques and store the extracted data in a structured format.
+A complete full-stack web application to **automatically extract data from scanned receipt PDFs** using OCR (Optical Character Recognition) and store the results in a structured database.
 
-## **Project Overview**
-
-You will be working with a repository containing a collection of scanned receipts in **PDF format**, categorized into directories based on the year of purchase. The challenge is to **automate** the extraction of information from these scanned receipts and store it efficiently in a **SQLite database**.
-
-Deadline for submission is **3 days** from when you receive the email.
-
-## **Problem Statement**
-
-Develop a solution as a **web application** with **REST APIs** that can:
-1. **Upload scanned receipts** in PDF format. The files can be stored in a local directory.
-2. **Validate** the uploaded files to ensure they are valid PDFs.
-3. **Extract key details** from the receipts using **OCR/AI-based text extraction** techniques.
-4. **Store extracted information** in a structured database schema.
-5. **Provide APIs** for managing and retrieving receipts and their extracted data.
-
-You may use **any programming language, framework, or OCR/AI library** to implement the solution.
+> ✅ Built as part of the **Automate Accounts Developer Hiring Assessment**.
 
 ---
 
-## **Database Schema**
+## 📦 Tech Stack
 
-The extracted information should be stored in an **SQLite database (`receipts.db`)**.
-
-### **1. Receipt File Table (`receipt_file`)**
-Stores metadata of uploaded receipt files.
-
-| Column Name     | Description                                                    |
-|-----------------|----------------------------------------------------------------|
-| `id`            | Unique identifier for each uploaded file                        |
-| `file_name`     | Name of the uploaded file                                       |
-| `file_path`     | Storage path of the uploaded file                               |
-| `is_valid`      | Indicates if the file is a valid PDF                            |
-| `invalid_reason`| Reason for file being invalid (if applicable)                   |
-| `is_processed`  | Indicates if the file has been processed                        |
-| `created_at`    | Creation time (when receipt was first uploaded)                 |
-| `updated_at`    | Last update time (latest modification in case of re-upload)     |
-
-### **2. Receipt Table (`receipt`)**
-Stores extracted information from valid receipt files.
-
-You can modify the schema as needed to store additional information extracted from the receipts like transaction details, purchased items details, payment details and other information.
-
-| Column Name     | Description                                     |
-|----------------|-------------------------------------------------|
-| `id`           | Unique identifier for each extracted receipt     |
-| `purchased_at` | Date and time of purchase (extracted from receipt)|
-| `merchant_name`| Merchant name (extracted from receipt)           |
-| `total_amount` | Total amount spent (extracted from receipt)      |
-| `file_path`    | Path to the associated scanned receipt          |
-| `created_at`   | Creation time (when receipt was processed)       |
-| `updated_at`   | Last update time (latest modification)          |
----
-
-## **API Specifications**
-
-The solution should expose a set of **REST APIs** for receipt management. You may use any web framework and implement the APIs with or without an ORM.
-
-### **1. `/upload` (POST)**
-- Uploads a receipt file (PDF format only).
-- Stores metadata in the `receipt_file` table.
-
-### **2. `/validate` (POST)**
-- Validates whether the uploaded file is a valid PDF.
-- Updates `is_valid` and `invalid_reason` fields in the `receipt_file` table.
-
-### **3. `/process` (POST)**
-- Extracts receipt details using OCR/AI.
-- Stores extracted information in the `receipt` table.
-- Marks `is_processed` as `True` in the `receipt_file` table.
-
-### **4. `/receipts` (GET)**
-- Lists all receipts stored in the database.
-
-### **5. `/receipts/{id}` (GET)**
-- Retrieves details of a specific receipt by its ID.
+| Layer     | Tech                          |
+|-----------|-------------------------------|
+| Frontend  | React.js + TypeScript         |
+| Backend   | FastAPI (Python)              |
+| OCR       | Tesseract via `pytesseract`   |
+| Database  | SQLite (via SQLAlchemy ORM)   |
 
 ---
 
-## **Evaluation Criteria**
+## ✨ Features
 
-Your submission will be evaluated based on the following factors:
-
-1. **Accuracy of extracted information** – How well the OCR/AI system extracts key details.
-2. **Code quality & readability** – Clean, maintainable, and well-documented code.
-3. **Database schema design** – Efficient and scalable schema structure.
-4. **API design & functionality** – Proper implementation of API endpoints.
-5. **Error handling & validation** – Robust handling of invalid files and extraction errors.
-6. **Documentation** – Clear instructions on setup, usage, and functionality.
-7. **Git commit history** – Meaningful commits showing structured development progress.
+- 📤 Upload scanned receipt PDFs
+- ✅ Validate uploaded files as valid PDFs
+- 🧠 Extract merchant name, purchase date, total amount using OCR
+- 🛑 Prevent duplicate entries based on filename
+- 🔁 Reprocess all files via admin/dev API
+- 🔍 View all receipts and their details via frontend
+- 🧾 Stylish React UI with clear feedback
 
 ---
 
-## **Submission Guidelines**
+## 🗂️ Project Structure
 
-Your final submission should be a **ZIP file** containing:
+automate-accounts-developer-hiring-assessment/
+│
+├── backend/
+│   ├── app/
+│   │   ├── endpoints/
+│   │   │   ├── upload.py
+│   │   │   ├── validate.py
+│   │   │   ├── process.py
+│   │   │   ├── receipts.py
+│   │   │   └── dev_tools.py
+│   │   ├── core/
+│   │   │   └── ocr_utils.py
+│   │   ├── db/
+│   │   │   ├── models.py
+│   │   │   ├── session.py
+│   │   │   └── __init__.py
+│   │   ├── main.py              
+│   │   └── __init__.py
+│   ├── uploaded_receipts/        
+│   ├── receipts.db               
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── UploadForm.tsx
+│   │   │   ├── ReceiptList.tsx
+│   │   │   └── ReceiptDetail.tsx
+│   │   ├── axios/
+│   │   │   └── api.ts
+│   │   ├── App.tsx
+│   │   └── index.tsx
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── .gitignore
+└── README.md
 
-1. **Source Code** – The complete implementation of your solution.
-2. **Database File (`receipts.db`)** – The SQLite database with sample entries.
-3. **Documentation** – A README file explaining:
-   - How to set up and run the project
-   - API usage with example requests/responses
-   - Any dependencies required
-4. **Execution Instructions** – Any specific setup steps needed to test your implementation.
 
----
 
-## **Additional Notes**
+## 🔌 API Endpoints
 
-1. **Flexibility** – You are free to enhance or modify the problem statement as needed. If you think of a better approach, feel free to implement it.
-2. **Technology Choice** – Use any programming language, framework, and libraries of your choice.
-3. **Duplicate Handling** – If the same receipt is uploaded multiple times, **update** the existing record instead of creating duplicates.
-4. **Partial Submissions** – If your solution is incomplete or has bugs, **submit anyway**. We value your approach and thought process more than a perfect implementation.
-5. **Support** – If you have any questions, feel free to reach out.
+### `POST /upload`
+Upload a receipt PDF.
 
----
+**Request:** `multipart/form-data` with key `file`  
+**Response:**
+```json
+{ "message": "File uploaded", "id": 1 }
+POST /validate
+Check if the uploaded file is a valid PDF.
 
-## **Happy Coding!**
+Request:
+
+json
+Copy
+Edit
+{ "id": 1 }
+Response:
+
+json
+Copy
+Edit
+{ "message": "File is valid PDF" }
+POST /process
+Run OCR on the receipt and extract data.
+
+Request:
+
+json
+Copy
+Edit
+{ "id": 1 }
+Response:
+
+json
+Copy
+Edit
+{ "message": "Receipt processed" }
+GET /receipts
+Fetch list of all receipts.
+
+Response:
+
+json
+Copy
+Edit
+[
+  {
+    "id": 1,
+    "merchant_name": "Best Buy",
+    "purchased_at": "12/02/21 20:35",
+    "total_amount": 196.03,
+    "file_path": "uploaded_receipts/receipt1.pdf"
+  }
+]
+GET /receipts/{id}
+Get details for a specific receipt.
+
+Response:
+
+json
+Copy
+Edit
+{
+  "id": 1,
+  "merchant_name": "Best Buy",
+  "purchased_at": "12/02/21 20:35",
+  "total_amount": 196.03,
+  "file_path": "uploaded_receipts/receipt1.pdf"
+}
+POST /reprocess-all
+Developer utility to re-run OCR on all previously uploaded valid PDFs.
+
+Automatically updates existing records (avoids duplicates)
+
+🧠 Application Flow
+User uploads PDF via frontend
+
+File is saved to uploaded_receipts/
+
+/validate checks if it's a valid PDF
+
+/process runs OCR to extract:
+
+Merchant name
+
+Date & Time
+
+Total amount
+
+Extracted data is stored in receipts.db
+
+UI fetches and displays all receipts
+
+💡 Duplicate Handling
+When uploading the same PDF again:
+
+The backend checks file_path
+
+If already processed, it updates the data instead of inserting a duplicate
+
+This also applies when using /reprocess-all.
+
+❌ Error Handling
+Error Message	Cause
+"Only PDF files are allowed"	File is not a PDF
+"Invalid or missing file"	File doesn't exist or isn't valid
+"Something went wrong"	Generic catch for OCR or DB errors
+
+🧾 Frontend UI Components
+
+Component	Purpose:
+
+1.UploadForm.tsx	Handles file upload and shows status
+2.ReceiptList.tsx	Lists all receipts with clickable entries
+3.ReceiptDetail.tsx	Detailed info of a single receipt
+
+// css
+Built with React and styled with clean minimal CSS
+
+Status messages in green/red
+
+Uses emojis and spacing to enhance clarity
+
+Clickable items are highlighted on hover
+
+
+🧪 How to Run the Project
+📦 Prerequisites
+Python 3.8+
+
+Node.js 18+
+
+tesseract-ocr installed
+
+✅ On Ubuntu:
+
+sudo apt update
+sudo apt install tesseract-ocr
+
+🛠 Backend Setup (FastAPI)
+
+1.cd backend
+2.python3 -m venv venv
+3.source venv/bin/activate
+
+4.pip install -r requirements.txt
+
+# Run the server
+5.uvicorn app.main:app --reload
+6.Runs at: http://localhost:8000
+
+⚛️ Frontend Setup (React)
+
+1.cd frontend
+2.npm install
+3.npm start
+4.Runs at: http://localhost:3000
+
+🧪 Testing the App
+
+Start both backend and frontend with two terminal
+
+1.Go to http://localhost:3000
+
+2.Upload a valid .pdf receipt
+
+3.Wait for "✅ Upload, validate, and process complete!"
+
+4.View all receipts listed below the form
+
+5.Click any to view full detail page
+
+
+## 🧑‍💻 Author
+
+Built by **[Nantha Kumar G](https://www.linkedin.com/in/nantha-kumar-g-70b09a192)** as part of the **Automate Accounts Developer Hiring Challenge**.
+
+- 🔗 GitHub: [github.com/NANTHA2001](https://github.com/NANTHA2001)
+- 🔗 LinkedIn: [linkedin.com/in/nantha-kumar-g-70b09a192](https://www.linkedin.com/in/nantha-kumar-g-70b09a192)
